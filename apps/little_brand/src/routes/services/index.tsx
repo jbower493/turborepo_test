@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServicesQuery } from "../../queries/services";
+import { useServicesQuery } from "@repo/queries/queries";
 
 export const Route = createFileRoute("/services/")({
     component: RouteComponent,
