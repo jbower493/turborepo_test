@@ -14,7 +14,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyServicesIndexImport } from './routes/my-services/index'
+import { Route as InvoicesIndexImport } from './routes/invoices/index'
 import { Route as MyServicesServiceIdIndexImport } from './routes/my-services/$serviceId/index'
+import { Route as InvoicesViewInvoiceIdIndexImport } from './routes/invoices/view/$invoiceId/index'
 
 // Create/Update Routes
 
@@ -36,11 +38,25 @@ const MyServicesIndexRoute = MyServicesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const InvoicesIndexRoute = InvoicesIndexImport.update({
+  id: '/invoices/',
+  path: '/invoices/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const MyServicesServiceIdIndexRoute = MyServicesServiceIdIndexImport.update({
   id: '/my-services/$serviceId/',
   path: '/my-services/$serviceId/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const InvoicesViewInvoiceIdIndexRoute = InvoicesViewInvoiceIdIndexImport.update(
+  {
+    id: '/invoices/view/$invoiceId/',
+    path: '/invoices/view/$invoiceId/',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -60,6 +76,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/my-services/': {
       id: '/my-services/'
       path: '/my-services'
@@ -74,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyServicesServiceIdIndexImport
       parentRoute: typeof rootRoute
     }
+    '/invoices/view/$invoiceId/': {
+      id: '/invoices/view/$invoiceId/'
+      path: '/invoices/view/$invoiceId'
+      fullPath: '/invoices/view/$invoiceId'
+      preLoaderRoute: typeof InvoicesViewInvoiceIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -82,46 +112,75 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/invoices': typeof InvoicesIndexRoute
   '/my-services': typeof MyServicesIndexRoute
   '/my-services/$serviceId': typeof MyServicesServiceIdIndexRoute
+  '/invoices/view/$invoiceId': typeof InvoicesViewInvoiceIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/invoices': typeof InvoicesIndexRoute
   '/my-services': typeof MyServicesIndexRoute
   '/my-services/$serviceId': typeof MyServicesServiceIdIndexRoute
+  '/invoices/view/$invoiceId': typeof InvoicesViewInvoiceIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/invoices/': typeof InvoicesIndexRoute
   '/my-services/': typeof MyServicesIndexRoute
   '/my-services/$serviceId/': typeof MyServicesServiceIdIndexRoute
+  '/invoices/view/$invoiceId/': typeof InvoicesViewInvoiceIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/my-services' | '/my-services/$serviceId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/invoices'
+    | '/my-services'
+    | '/my-services/$serviceId'
+    | '/invoices/view/$invoiceId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/my-services' | '/my-services/$serviceId'
-  id: '__root__' | '/' | '/about' | '/my-services/' | '/my-services/$serviceId/'
+  to:
+    | '/'
+    | '/about'
+    | '/invoices'
+    | '/my-services'
+    | '/my-services/$serviceId'
+    | '/invoices/view/$invoiceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/invoices/'
+    | '/my-services/'
+    | '/my-services/$serviceId/'
+    | '/invoices/view/$invoiceId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  InvoicesIndexRoute: typeof InvoicesIndexRoute
   MyServicesIndexRoute: typeof MyServicesIndexRoute
   MyServicesServiceIdIndexRoute: typeof MyServicesServiceIdIndexRoute
+  InvoicesViewInvoiceIdIndexRoute: typeof InvoicesViewInvoiceIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  InvoicesIndexRoute: InvoicesIndexRoute,
   MyServicesIndexRoute: MyServicesIndexRoute,
   MyServicesServiceIdIndexRoute: MyServicesServiceIdIndexRoute,
+  InvoicesViewInvoiceIdIndexRoute: InvoicesViewInvoiceIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -136,8 +195,10 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/invoices/",
         "/my-services/",
-        "/my-services/$serviceId/"
+        "/my-services/$serviceId/",
+        "/invoices/view/$invoiceId/"
       ]
     },
     "/": {
@@ -146,11 +207,17 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
+    "/invoices/": {
+      "filePath": "invoices/index.tsx"
+    },
     "/my-services/": {
       "filePath": "my-services/index.tsx"
     },
     "/my-services/$serviceId/": {
       "filePath": "my-services/$serviceId/index.tsx"
+    },
+    "/invoices/view/$invoiceId/": {
+      "filePath": "invoices/view/$invoiceId/index.tsx"
     }
   }
 }

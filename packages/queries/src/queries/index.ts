@@ -27,3 +27,22 @@ export function useServicesQuery() {
         queryFn: getServices,
     });
 }
+
+function getSingleService(
+    id: number
+): Promise<{ id: number; name: string; description: string }> {
+    return new Promise((resolve) =>
+        resolve({
+            id,
+            name: `Service number ${id}`,
+            description: "Something about the service",
+        })
+    );
+}
+
+export function useSingleServiceQuery(id: number) {
+    return useQuery({
+        queryKey: ["SINGLE_SERVICE"],
+        queryFn: () => getSingleService(id),
+    });
+}

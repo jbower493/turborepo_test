@@ -37,6 +37,14 @@ function RootComponent() {
                     >
                         Services
                     </Link>
+                    <Link
+                        to="/invoices"
+                        activeProps={{
+                            className: "font-bold",
+                        }}
+                    >
+                        Invoices
+                    </Link>
                 </div>
             </div>
             <hr />

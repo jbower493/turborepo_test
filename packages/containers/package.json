@@ -3,7 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "exports": {
-        "./service": "./src/service/index.tsx"
+        "./service": "./src/service/index.tsx",
+        "./invoices": "./src/invoices/index.tsx"
     },
     "scripts": {
         "lint": "eslint . --max-warnings 0",
@@ -12,6 +13,7 @@
     "devDependencies": {
         "@repo/eslint-config": "*",
         "@repo/typescript-config": "*",
+        "@tanstack/react-router": "^1.79.0",
         "@turbo/gen": "^1.12.4",
         "@types/node": "^20.11.24",
         "@types/eslint": "^8.56.5",
@@ -21,6 +23,10 @@
         "typescript": "^5.3.3"
     },
     "dependencies": {
+        "@repo/queries": "*",
         "react": "^18.2.0"
+    },
+    "peerDependencies": {
+        "@tanstack/react-router": "^1.79.0"
     }
 }

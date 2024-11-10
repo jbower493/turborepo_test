@@ -14,7 +14,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutUsImport } from './routes/about-us'
 import { Route as IndexImport } from './routes/index'
 import { Route as ServicesIndexImport } from './routes/services/index'
+import { Route as InvoicesIndexImport } from './routes/invoices/index'
 import { Route as ServicesServiceIdIndexImport } from './routes/services/$serviceId/index'
+import { Route as InvoicesInvoiceIdIndexImport } from './routes/invoices/$invoiceId/index'
 
 // Create/Update Routes
 
@@ -36,9 +38,21 @@ const ServicesIndexRoute = ServicesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const InvoicesIndexRoute = InvoicesIndexImport.update({
+  id: '/invoices/',
+  path: '/invoices/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ServicesServiceIdIndexRoute = ServicesServiceIdIndexImport.update({
   id: '/services/$serviceId/',
   path: '/services/$serviceId/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const InvoicesInvoiceIdIndexRoute = InvoicesInvoiceIdIndexImport.update({
+  id: '/invoices/$invoiceId/',
+  path: '/invoices/$invoiceId/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,11 +74,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutUsImport
       parentRoute: typeof rootRoute
     }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof InvoicesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/services/': {
       id: '/services/'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/invoices/$invoiceId/': {
+      id: '/invoices/$invoiceId/'
+      path: '/invoices/$invoiceId'
+      fullPath: '/invoices/$invoiceId'
+      preLoaderRoute: typeof InvoicesInvoiceIdIndexImport
       parentRoute: typeof rootRoute
     }
     '/services/$serviceId/': {
@@ -82,14 +110,18 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/invoices': typeof InvoicesIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdIndexRoute
   '/services/$serviceId': typeof ServicesServiceIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/invoices': typeof InvoicesIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/invoices/$invoiceId': typeof InvoicesInvoiceIdIndexRoute
   '/services/$serviceId': typeof ServicesServiceIdIndexRoute
 }
 
@@ -97,30 +129,55 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/invoices/': typeof InvoicesIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/invoices/$invoiceId/': typeof InvoicesInvoiceIdIndexRoute
   '/services/$serviceId/': typeof ServicesServiceIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about-us' | '/services' | '/services/$serviceId'
+  fullPaths:
+    | '/'
+    | '/about-us'
+    | '/invoices'
+    | '/services'
+    | '/invoices/$invoiceId'
+    | '/services/$serviceId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about-us' | '/services' | '/services/$serviceId'
-  id: '__root__' | '/' | '/about-us' | '/services/' | '/services/$serviceId/'
+  to:
+    | '/'
+    | '/about-us'
+    | '/invoices'
+    | '/services'
+    | '/invoices/$invoiceId'
+    | '/services/$serviceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about-us'
+    | '/invoices/'
+    | '/services/'
+    | '/invoices/$invoiceId/'
+    | '/services/$serviceId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutUsRoute: typeof AboutUsRoute
+  InvoicesIndexRoute: typeof InvoicesIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
+  InvoicesInvoiceIdIndexRoute: typeof InvoicesInvoiceIdIndexRoute
   ServicesServiceIdIndexRoute: typeof ServicesServiceIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutUsRoute: AboutUsRoute,
+  InvoicesIndexRoute: InvoicesIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
+  InvoicesInvoiceIdIndexRoute: InvoicesInvoiceIdIndexRoute,
   ServicesServiceIdIndexRoute: ServicesServiceIdIndexRoute,
 }
 
@@ -136,7 +193,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about-us",
+        "/invoices/",
         "/services/",
+        "/invoices/$invoiceId/",
         "/services/$serviceId/"
       ]
     },
@@ -146,8 +205,14 @@ export const routeTree = rootRoute
     "/about-us": {
       "filePath": "about-us.tsx"
     },
+    "/invoices/": {
+      "filePath": "invoices/index.tsx"
+    },
     "/services/": {
       "filePath": "services/index.tsx"
+    },
+    "/invoices/$invoiceId/": {
+      "filePath": "invoices/$invoiceId/index.tsx"
     },
     "/services/$serviceId/": {
       "filePath": "services/$serviceId/index.tsx"
